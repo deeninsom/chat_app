@@ -46,24 +46,19 @@ const App = () => {
       await axios.post('http://localhost:3000/messages',{
         body
       })
-      getDataMessage()
+      // getDataMessage('')
+      setBody('')
+      // clearInput()
     } catch (error) {
       console.log(error);
     }
   }
 
-  ws.onmessage = (e) => {
+  ws.onmessage = () => {
     const data = getDataMessage()
-    if (data.type === 'ping') return;
-    if (data.type === 'test') return;
-    if (data.type === 'hello') return;
-    const message = data.message;
-    setMessageScroll([...showData, message])
+    resetScroll(data)
   }
 
-  const setMessageScroll = () => {
-    resetScroll();
-  }
 
   const resetScroll = () => {
     if (!msgScroll) return;
@@ -72,11 +67,16 @@ const App = () => {
 
 
 
+
+
   return (
     <section className='room-chat'>
       <div className='message-app '>
         <div className='title text-[30px] pb-5 font-bold text-teal-400 text-center pt-6 '>Message App</div>
-        <div className='head-room flex text-white rounded-t-md bg-slate-600 m-auto w-[80%] p-3'>User Id : {id}</div>
+        <div className='flex rounded-t-md bg-slate-600 m-auto w-[80%] p-3 justify-between'>
+        <div className='head-room  text-white '>Chat Room</div>
+        {/* <i className="fa-solid fa-trash text-white cursor-pointer" onClick={handleDeleted}></i> */}
+        </div>
         <div className='body-chat bg-slate-400 h-[400px] m-auto w-[80%] flex flex-col space-y-4 p-3  overflow-y-auto'>
           {/* first chat */}
           <div className='msg' >
@@ -86,12 +86,15 @@ const App = () => {
                 showData.map((data)=>{
                   return (
                     <div key={data.id}>
-                    <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700' id='message' >{data.body}</span>
+                    <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700' id='message' > {data.body} </span>
                     </div>
                     )
                   })
                 }
                 </div>
+                {/* <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start' >
+                  <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700' onChange={setBody}></span>
+                </div> */}
               {/* {messages.map((message) => 
               return (
                 <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start' key={message.id}>
