@@ -10,7 +10,6 @@ const App = () => {
   const [showData, setShowData] = useState([]);
   const [id, setId] = useState("")
   const [body, setBody] = useState("");
-  const msgScroll = document.getElementById("message")
 
   const getDataMessage = async () =>{
     const respons = await axios.get('http://localhost:3000/messages')
@@ -22,9 +21,7 @@ const App = () => {
     getDataMessage()
   }, [])
 
-  useEffect(() => {
-    resetScroll();
-  }, [showData]);
+
 
   ws.onopen = () => {
     console.log("websoket is connecting")
@@ -46,26 +43,15 @@ const App = () => {
       await axios.post('http://localhost:3000/messages',{
         body
       })
-      // getDataMessage('')
       setBody('')
-      // clearInput()
     } catch (error) {
       console.log(error);
     }
   }
 
   ws.onmessage = () => {
-    const data = getDataMessage()
-    resetScroll(data)
+    getDataMessage()
   }
-
-
-  const resetScroll = () => {
-    if (!msgScroll) return;
-    msgScroll.scrollTop = msgScroll.scrollHeight;
-  };
-
-
 
 
 
@@ -75,7 +61,6 @@ const App = () => {
         <div className='title text-[30px] pb-5 font-bold text-teal-400 text-center pt-6 '>Message App</div>
         <div className='flex rounded-t-md bg-slate-600 m-auto w-[80%] p-3 justify-between'>
         <div className='head-room  text-white '>Chat Room</div>
-        {/* <i className="fa-solid fa-trash text-white cursor-pointer" onClick={handleDeleted}></i> */}
         </div>
         <div className='body-chat bg-slate-400 h-[400px] m-auto w-[80%] flex flex-col space-y-4 p-3  overflow-y-auto'>
           {/* first chat */}
@@ -95,25 +80,8 @@ const App = () => {
                 {/* <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start' >
                   <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700' onChange={setBody}></span>
                 </div> */}
-              {/* {messages.map((message) => 
-              return (
-                <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start' key={message.id}>
-                  <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700'>{message.body}</span>
-                </div>
-              ))} */}
             </div>
           </div>
-
-          {/* second chat */}
-          {/* <div className='chat-massage'>
-              <div className='flex items-end justify-end'>
-                <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start'>
-                {message.map((messages) => (
-                  <span className='px-4 py-2 rounded-lg inline-block rounded-br-none bg-gray-300 text-gray-700' key={messages.id}>{messages.body}</span>
-                  ))}
-                </div>
-              </div>
-            </div> */}
 
         </div>
         <div className='sendMessage flex rounded-b-md bg-slate-600 m-auto w-[80%] p-4'>
