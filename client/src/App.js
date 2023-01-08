@@ -3,7 +3,7 @@ import React, { useEffect, useState } from 'react';
 import axios from 'axios'
 import './index.css';
 
-const ws = new WebSocket('ws://localhost:3000/cable')
+const webSoket = new WebSocket('ws://localhost:3000/websoket')
 
 const App = () => {
 
@@ -11,6 +11,7 @@ const App = () => {
   const [id, setId] = useState("")
   const [body, setBody] = useState("");
 
+  //show data
   const getDataMessage = async () =>{
     const respons = await axios.get('http://localhost:3000/messages')
     const data = await respons.data.data
@@ -23,10 +24,11 @@ const App = () => {
 
 
 
-  ws.onopen = () => {
+  //connecting to websoket
+  webSoket.onopen = () => {
     console.log("websoket is connecting")
     setId(Math.random().toString(20).substring(2, 15))
-    ws.send(
+    webSoket.send(
       JSON.stringify({
         command: "subs",
         identifier: JSON.stringify({
@@ -37,6 +39,7 @@ const App = () => {
     )
   }
 
+  //post data
   const handleMessage = async (e) =>{
     e.preventDefault();
     try {
@@ -49,11 +52,10 @@ const App = () => {
     }
   }
 
-  ws.onmessage = () => {
+  //on realtime websoket
+  webSoket.onmessage = () => {
     getDataMessage()
   }
-
-
 
   return (
     <section className='room-chat'>
