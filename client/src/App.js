@@ -79,17 +79,14 @@ const App = () => {
                   })
                 }
                 </div>
-                {/* <div className='flex flex-col space-y-2 text-xs max-w-xs order-2 items-start' >
-                  <span className='px-4 py-2 rounded-lg inline-block rounded-bl-none bg-gray-300 text-gray-700' onChange={setBody}></span>
-                </div> */}
             </div>
           </div>
 
         </div>
-        <div className='sendMessage flex rounded-b-md bg-slate-600 m-auto w-[80%] p-4'>
+        <div className='sendMessage flex rounded-b-md bg-slate-600 mx-auto w-[80%] p-4 '>
           <form onSubmit={handleMessage}>
-            <input className='messageInput rounded lg:w-[1000px] lg:h-[120%]   sm:w-[100px] pl-2' type="text" placeholder='send message' value={body} onChange={(e) => setBody(e.target.value)} />
-            <button type='submit' className='bg-gray-500 ml-2 rounded-md w-[50px] h-[125%] '>send</button>
+            <input className='messageInput rounded lg:w-[1000px] lg:h-[120%] pl-2 mx-auto' type="text" placeholder='send message' value={body} onChange={(e) => setBody(e.target.value)} />
+            <button type='submit' className='bg-gray-500 ml-2 rounded-md w-[50px] h-[125%]'>send</button>
           </form>
         </div>
       </div>
